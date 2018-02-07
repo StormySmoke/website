@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/StormySmoke/website/issues"
   },
-  "homepage": "https://github.com/StormySmoke/website#readme"
+  "homepage": "https://github.com/StormySmoke/website#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
 }
