@@ -15,4 +15,4 @@ app.post('/index', function(req, res) {
     res.send("Text successfully indexed.");
 });
 
-var server = app.listen(8080);
+var server = app.listen(process.env.PORT || 8080);
