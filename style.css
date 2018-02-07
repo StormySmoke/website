@@ -50,10 +50,37 @@ button:hover {
   height: 100vh;
 }
 
+#output-result {
+    margin-top: 10px;
+    background: white;
+    padding: 10px;
+    display: none;
+}
+
 #div-result {
   margin-top: 25px;
 }
 
 #div-text {
   margin-top: 25px;
+}
+
+.loader {
+    border: 16px solid #a3a3a3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/StormySmoke/website#readme",
   "dependencies": {
+    "amqplib": "^0.5.2",
     "body-parser": "^1.18.2",
     "express": "^4.16.2"
   }

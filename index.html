@@ -10,6 +10,12 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
+  $(document).ajaxStart(function() {
+    $(".loader").show();
+  });
+  $(document).ajaxStop(function() {
+    $(".loader").hide();
+  });
   $(document).ready(function(){
     // On clicking "Query" button, make POST to /query with query sentence
     $("#submit-query").click(function(){
@@ -21,16 +27,18 @@
                { query: $("#input-query").val() },
                function(data, status) {
                  $("#output-result").html(data);
+                 $("#output-result").show();
                });
       }
     });
     // On clicking "Index" button, make POST to /index with text
     $("#submit-text").click(function(){
-        // POST with query sentence
-        $.post("index",
-        { text: $("#input-text").val() },
-        function(data, status){
-          //$("#input-text").val(data);
+      $("#output-result").text("");
+      $("#output-result").hide();
+      $.post("index",
+      { text: $("#input-text").val() },
+      function(data, status){
+        // foo
       });
     });
   });
@@ -43,6 +51,8 @@
   <main>
 
     <h1>Sent2Vec</h1>
+
+    <div class="loader"></div>
 
     <div id="div-query">
       Enter query sentence:<br />
