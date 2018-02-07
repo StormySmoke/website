@@ -27,7 +27,12 @@
                { query: $("#input-query").val() },
                function(data, status) {
                  obj = JSON.parse(data);
-                 $("#output-result").html(obj.result[0][0]);
+                 html = '<ol id="result-list">'
+                 for (var i = 0; i < obj.length; i++) {
+                    html += "<li>" + obj[i].sentence + " [" + obj[i].distance + "]</li>";
+                 }
+                 html += "</ol>";
+                 $("#output-result").html(html);
                  $("#output-result").show();
                });
       }

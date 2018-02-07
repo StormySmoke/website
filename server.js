@@ -38,7 +38,13 @@ amqp.connect(uri, function(err, conn) {
 });
 
 function handleQueryResponse(obj) {
-  resQuery.send(obj.result.toString());
+  k = obj.result[0].length
+  arr = []
+  for (var i = 0; i < k; i++) {
+    e = {sentence: obj.result[0][i], distance: obj.result[1][i]}
+    arr.push(e);
+  }
+  resQuery.send(JSON.stringify(arr));
 }
 
 function handleIndexResponse(res) {

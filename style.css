@@ -57,6 +57,10 @@ button:hover {
     display: none;
 }
 
+#result-list li {
+    margin: 10px 0 10px 0;
+}
+
 #div-result {
   margin-top: 25px;
 }
