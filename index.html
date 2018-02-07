@@ -26,7 +26,8 @@
         $.post("query",
                { query: $("#input-query").val() },
                function(data, status) {
-                 $("#output-result").html(data);
+                 obj = JSON.parse(data);
+                 $("#output-result").html(obj.result[0][0]);
                  $("#output-result").show();
                });
       }
