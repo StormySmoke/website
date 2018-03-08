@@ -7,8 +7,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var amqp = require('amqplib/callback_api');
 
-var uri = process.env.CLOUDAMQP_URL;
-var queueName = 'website-to-sent2vec';
+//var uri = process.env.CLOUDAMQP_URL;
+var uri = process.env.RABBITMQ_URI;
+var queueName = 'sent2vec-front-to-back';
 var replyQueueName = null;
 var channel = null;
 var correlationId = null;
