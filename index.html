@@ -49,7 +49,7 @@
     function formatKnnResult(result) {
       html = '<ol id="result-list">'
       for (var i = 0; i < result.sent.length; i++) {
-        html += '<li>' + result.sent[i] + ' [' + result.dist[i] + ']</li>';
+        html += '<li>' + result.sent[i] + '<ul><li>Distance: ' + Math.round(result.dist[i] * 1000000)/1000000 + '</li></ul>';
       }
       html += '</ol>';
       return html;
@@ -69,18 +69,21 @@
     <div class="loader"></div>
 
     <div id="div-query">
-      Enter query sentence:<br />
+      <h2>Query</h2>
+      <p class="description">Enter a query sentence for which to find the k-nearest-neighbours.</p>
       <input id="input-query" type="text" name="query">
       <button id="submit-query">Query</button>
     </div>
 
     <div id="div-result">
-      Result:<br />
+      <h2>Result</h2>
+      <p class="description">The k-nearest-neighbours for your query sentence.</p>
       <div id="output-result"></div>
     </div>
 
     <div id="div-text">
-      Enter text to encode:<br />
+      <h2>Encode</h2>
+      <p class="description">Enter some text to encode.</p>
       <button id="submit-text">Encode</button>
       <textarea id="input-text"></textarea>
     </div>
