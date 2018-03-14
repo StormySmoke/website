@@ -10,6 +10,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
+  //window.sent2VecId = null;
   $(document).ajaxStart(function() {
     $(".loader").show();
   });
@@ -17,36 +18,43 @@
     $(".loader").hide();
   });
   $(document).ready(function(){
-    // On clicking "Query" button, make POST to /query with query sentence
+    // On clicking "Query" button, make POST to /knn with query sentence
     $("#submit-query").click(function(){
-      if (!$("#input-text").val()) {
-        alert("Index some text first.");
+      if (window.sessionStorage.sent2VecId == null) {
+        alert("Please encode some text first.");
         $("#input-text").focus();
       } else {
-        $.post("query",
-               { query: $("#input-query").val() },
-               function(data, status) {
-                 obj = JSON.parse(data);
-                 html = '<ol id="result-list">'
-                 for (var i = 0; i < obj.length; i++) {
-                    html += "<li>" + obj[i].sentence + " [" + obj[i].distance + "]</li>";
-                 }
-                 html += "</ol>";
-                 $("#output-result").html(html);
-                 $("#output-result").show();
+        $.post("knn",
+                { query: $("#input-query").val(), id: window.sessionStorage.sent2VecId },
+                function(data, status) {
+                  html = formatKnnResult(JSON.parse(data));
+                  $("#output-result").html(html);
+                  $("#output-result").show();
                });
       }
     });
-    // On clicking "Index" button, make POST to /index with text
+
+    // On clicking "Encode" button, make POST to /encode with text
     $("#submit-text").click(function(){
       $("#output-result").text("");
       $("#output-result").hide();
-      $.post("index",
-      { text: $("#input-text").val() },
-      function(data, status){
-        // foo
-      });
+      $.post("encode",
+              { text: $("#input-text").val() },
+              function(data, status){
+                window.sessionStorage.sent2VecId = JSON.parse(data)['id']
+              }
+      );
     });
+
+    function formatKnnResult(result) {
+      html = '<ol id="result-list">'
+      for (var i = 0; i < result.sent.length; i++) {
+        html += '<li>' + result.sent[i] + ' [' + result.dist[i] + ']</li>';
+      }
+      html += '</ol>';
+      return html;
+    }
+
   });
   </script>
 
@@ -72,8 +80,8 @@
     </div>
 
     <div id="div-text">
-      Enter text to index:<br />
-      <button id="submit-text">Index</button>
+      Enter text to encode:<br />
+      <button id="submit-text">Encode</button>
       <textarea id="input-text"></textarea>
     </div>
 

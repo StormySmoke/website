@@ -1,92 +1,67 @@
+#!/usr/bin/env node
+
+var amqp = require('amqplib');
 var express = require('express');
 var bodyParser = require('body-parser');
+var uuid = require('uuid/v4');
+
 var app = express();
-
 app.use(express.static(__dirname));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
-var amqp = require('amqplib/callback_api');
+var uri = process.env.RABBITMQ_URI || 'amqp://localhost';
+var reqQueue = 'sent2vec-client-to-server';
+var resQueue = 'sent2vec-server-to-client';
 
-//var uri = process.env.CLOUDAMQP_URL;
-var uri = process.env.RABBITMQ_URI;
-var queueName = 'sent2vec-front-to-back';
-var replyQueueName = null;
 var channel = null;
-var correlationId = null;
+var messages = {};
 
-var resQuery = null;
-var resIndex = null;
-
-amqp.connect(uri, function(err, conn) {
-  conn.createChannel(function(err, ch) {
+amqp.connect(uri).then(function(conn) {
+  conn.createChannel().then(function(ch) {
     channel = ch;
-    ch.assertQueue(queueName, {durable: false});
-    ch.assertQueue('', {exclusive: true}, function(err, q) {
-      replyQueueName = q
-      ch.consume(q.queue, function(msg) {
-          if (msg.properties.correlationId == correlationId) {
-            json = msg.content.toString();
-            obj = JSON.parse(json);
-            if (obj.result == null) {
-              handleIndexResponse(obj);
-            } else {
-              handleQueryResponse(obj);
-            }
-          }
-        }, {noAck: true}); 
-    });
+    ch.assertQueue(reqQueue, {durable: false, autoDelete: true});
+    ch.assertQueue(resQueue, {durable: false, autoDelete: true});
+    ch.consume(resQueue, function(msg) {
+      content = JSON.parse(msg.content.toString());
+      if (record = messages[content.id]) {
+        delete messages[content.id];
+        if (record.method == 'encode')
+          handleEncodeResponse(content, record.response);
+        else if (record.method == 'knn')
+          handleKnnResponse(content, record.response);
+      }
+    }, {noAck: true});
   });
 });
 
-function handleQueryResponse(obj) {
-  k = obj.result[0].length
-  arr = []
-  for (var i = 0; i < k; i++) {
-    e = {sentence: obj.result[0][i], distance: obj.result[1][i]}
-    arr.push(e);
-  }
-  resQuery.send(JSON.stringify(arr));
-}
-
-function handleIndexResponse(res) {
-  resIndex.send("Text successfully indexed.");
-}
-
-function sendQueryMsg(sentence, k) {
-  correlationId = generateUuid();
-  obj = {method: "query", params: [sentence, k] };
-  json = JSON.stringify(obj);
-  channel.sendToQueue(queueName, new Buffer(json),
-                      {correlationId: correlationId, replyTo: replyQueueName.queue});
-  
-}
-
-function sendIndexMsg(text) {
-  correlationId = generateUuid();
-  obj = {method: "index", params: text };
-  json = JSON.stringify(obj);
-  channel.sendToQueue(queueName, new Buffer(json),
-                      {correlationId: correlationId, replyTo: replyQueueName.queue});
-  
-}
-
-// Handle querying of nearest neighbours
-app.post('/query', function(req, res) {
-    resQuery = res;
-    sendQueryMsg(req.body.query, 3);
+app.post('/encode', function(req, res) {
+    id = uuid();
+    messages[id] = {method: 'encode', response: res};
+    body = JSON.stringify({
+                            method: 'encode',
+                            params: {text: req.body.text},
+                            id: id
+                          });
+    channel.sendToQueue(reqQueue, Buffer.from(body));
 });
 
-// Handle indexing of text
-app.post('/index', function(req, res) {
-    resIndex = res;
-    sendIndexMsg(req.body.text);
+app.post('/knn', function(req, res) {
+    id = uuid();
+    messages[id] = {method: 'knn', response: res};
+    body = JSON.stringify({
+                            method: 'knn',
+                            params: {query: req.body.query, k: 3, id: req.body.id},
+                            id: id
+                          });
+    channel.sendToQueue(reqQueue, Buffer.from(body));
 });
 
-function generateUuid() {
-  return Math.random().toString() +
-         Math.random().toString() +
-         Math.random().toString();
+function handleEncodeResponse(content, res) {
+  res.send(JSON.stringify({id: content.result.id}));
+}
+
+function handleKnnResponse(content, res) {
+  res.send(JSON.stringify(content.result));
 }
 
 var server = app.listen(process.env.PORT || 8080);
-
