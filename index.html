@@ -29,10 +29,14 @@
       } else {
         $.post("knn",
                 { query: $("#input-query").val(), id: window.sessionStorage.sent2VecId },
-                function(data, status) {
-                  html = formatKnnResult(JSON.parse(data));
-                  $("#output-result").html(html);
-                  $("#output-result").show();
+                function(data, status, xhr) {
+                  if (xhr.status == "200") {
+                    html = formatKnnResult(JSON.parse(data));
+                    $("#output-result").html(html);
+                    $("#output-result").show();
+                  }
+                  else
+                    alert("Server error: " + xhr.status);
                });
       }
     });
@@ -43,8 +47,13 @@
       $("#output-result").hide();
       $.post("encode",
               { text: $("#input-text").val() },
-              function(data, status){
-                window.sessionStorage.sent2VecId = JSON.parse(data)['id']
+              function(data, status, xhr){
+                if (xhr.status == "200")
+                  window.sessionStorage.sent2VecId = JSON.parse(data)['id']
+                else if (xhr.status == "503")
+                  alert("Request timeout exceeded. Try with a shorter text.");
+                else
+                  alert("Server error: " + xhr.status);
               }
       );
     });
