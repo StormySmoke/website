@@ -51,7 +51,7 @@
                 if (xhr.status == "200")
                   window.sessionStorage.sent2VecId = JSON.parse(data)['id']
                 else if (xhr.status == "503")
-                  alert("Request timeout exceeded. Try with a shorter text.");
+                  alert("Request timeout. Try with a shorter text.");
                 else
                   alert("Server error: " + xhr.status);
               }
