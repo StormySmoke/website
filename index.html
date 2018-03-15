@@ -18,6 +18,9 @@
     $(".loader").hide();
   });
   $(document).ready(function(){
+    $.ajaxSetup({
+      timeout: 0
+    });
     // On clicking "Query" button, make POST to /knn with query sentence
     $("#submit-query").click(function(){
       if (window.sessionStorage.sent2VecId == null) {
