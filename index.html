@@ -51,6 +51,7 @@
                 if (xhr.status == "200")
                   window.sessionStorage.sent2VecId = JSON.parse(data)['id']
                 else if (xhr.status == "503")
+                  // This is NOT reached when the Heroku request timeout is hit
                   alert("Request timeout. Try with a shorter text.");
                 else
                   alert("Server error: " + xhr.status);
@@ -78,13 +79,25 @@
 
     <h1>Sent2Vec</h1>
 
+      <div id="intro">
+      <p><b>How does it work?</b></p>
+      <ol>
+        <li>Encode an arbitrary piece of text.</li>
+        <li>Extract the sentences that are closest in meaning to a query sentence of your choice.</li>
+      </ol>
+      <p><b>Remember:</b> this application does not answer questions. It extracts the sentences from the text that are semantically most similar to your query sentence (its k-nearest-neighbours).</p>
+      <p>To better see how it works, start by querying an exact copy of a sentence appearing in the text. Then alter one word, and so on, and observe the reported distances.</p>
+      </div>
+  
+  
+
     <div class="loader"></div>
 
     <div id="div-query">
-      <h2>Query</h2>
+      <h2>Extract</h2>
       <p class="description">Enter a query sentence for which to find the k-nearest-neighbours.</p>
       <input id="input-query" type="text" name="query">
-      <button id="submit-query">Query</button>
+      <button id="submit-query">Extract</button>
     </div>
 
     <div id="div-result">
