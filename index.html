@@ -7,74 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script>
-  //window.sent2VecId = null;
-  $(document).ajaxStart(function() {
-    $(".loading").show();
-  });
-  $(document).ajaxStop(function() {
-    $(".loading").hide();
-  });
-  $(document).ready(function(){
-    $.ajaxSetup({
-      timeout: 0
-    });
-    // On clicking "Query" button, make POST to /knn with query sentence
-    $("#submit-query").click(function(){
-      if (window.sessionStorage.sent2VecId == null) {
-        alert("Please encode some text first.");
-        $("#input-text").focus();
-      } else {
-        $.post("knn",
-                { query: $("#input-query").val(), id: window.sessionStorage.sent2VecId },
-                function(data, status, xhr) {
-                  if (xhr.status == "200") {
-                    html = formatKnnResult(JSON.parse(data));
-                    $("#output-result").html(html);
-                    $("#div-result").show();
-                  }
-                  else
-                    alert("Server error: " + xhr.status);
-               });
-      }
-    });
-
-    // On clicking "Encode" button, make POST to /encode with text
-    $("#submit-text").click(function(){
-      $("#output-result").text("");
-      $("#div-result").hide();
-      $.post("encode",
-              { text: $("#input-text").val() },
-              function(data, status, xhr){
-                if (xhr.status == "200")
-                  window.sessionStorage.sent2VecId = JSON.parse(data)['id']
-                else if (xhr.status == "503")
-                  // This is NOT reached when the Heroku request timeout is hit
-                  alert("Request timeout. Try with a shorter text.");
-                else
-                  alert("Server error: " + xhr.status);
-              }
-      );
-    });
-
-    function formatKnnResult(result) {
-      html = '<ol id="result-list">'
-      for (var i = 0; i < result.sent.length; i++) {
-        html += '<li>' + result.sent[i] + '<ul><li>Distance: ' + Math.round(result.dist[i] * 1000000)/1000000 + '</li></ul>';
-      }
-      html += '</ol>';
-      return html;
-    }
-
-  });
-  </script>
-
+  <script src="client.js"></script>
 </head>
 
-<body>
 
+<body>
   <main>
 
     <h1>Sent2Vec</h1>
@@ -121,7 +59,6 @@
     </div>
 
   </main>
-
 </body>
 
 </html>
