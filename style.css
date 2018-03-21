@@ -59,7 +59,7 @@ button:hover {
   margin-top: 10px;
   background: white;
   padding: 10px;
-  border: 1px solid gray; }
+  border: 1px solid lightgray; }
 
 #result-list li {
   margin: 10px 0 10px 0; }
@@ -78,7 +78,7 @@ button:hover {
   /* Blue */
   border-radius: 50%;
   animation: spin 2s linear infinite;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   z-index: 1;
