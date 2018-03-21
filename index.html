@@ -12,10 +12,10 @@
   <script>
   //window.sent2VecId = null;
   $(document).ajaxStart(function() {
-    $(".loader").show();
+    $(".loading").show();
   });
   $(document).ajaxStop(function() {
-    $(".loader").hide();
+    $(".loading").hide();
   });
   $(document).ready(function(){
     $.ajaxSetup({
@@ -89,9 +89,8 @@
       <p>To better see how it works, start by querying an exact copy of a sentence appearing in the text. Then alter one word, and so on, and observe the reported distances.</p>
       </div>
   
-  
-
-    <div class="loader"></div>
+    <div class="loading" id="loading-background"></div>
+    <div class="loading" id="loading-spinner"></div>
 
     <div id="div-query">
       <h2>Extract</h2>
