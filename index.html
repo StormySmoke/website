@@ -33,7 +33,7 @@
                   if (xhr.status == "200") {
                     html = formatKnnResult(JSON.parse(data));
                     $("#output-result").html(html);
-                    $("#output-result").show();
+                    $("#div-result").show();
                   }
                   else
                     alert("Server error: " + xhr.status);
@@ -44,7 +44,7 @@
     // On clicking "Encode" button, make POST to /encode with text
     $("#submit-text").click(function(){
       $("#output-result").text("");
-      $("#output-result").hide();
+      $("#div-result").hide();
       $.post("encode",
               { text: $("#input-text").val() },
               function(data, status, xhr){
