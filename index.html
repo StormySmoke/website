@@ -17,13 +17,16 @@
 
     <h1>Sent2Vec</h1>
 
+    <p>Sentence Embedding Demo</p>
+
       <div id="intro">
       <p><b>How does it work?</b></p>
       <ol>
         <li>Encode an arbitrary piece of text.</li>
         <li>Extract the sentences that are closest in meaning to a query sentence of your choice.</li>
       </ol>
-      <p><b>Remember:</b> this application does not answer questions. It extracts the sentences from the text that are semantically most similar to your query sentence (its k-nearest-neighbours).</p>
+      <p><b>Note:</b> this demo does not answer questions. It extracts the sentences from the text that are semantically most similar to your query sentence (its k-nearest-neighbours).</p>
+      <p>Each extracted sentence has an associated <b>distance</b>. The closer this distance is to zero, the more semantically similar the sentence is to you query sentence.</p>
       <p>To better see how it works, start by querying an exact copy of a sentence appearing in the text. Then alter one word, and so on, and observe the reported distances.</p>
       </div>
   
@@ -32,27 +35,27 @@
 
     <div id="div-query">
       <h2>Extract</h2>
-      <p class="description">Enter a query sentence for which to find the k-nearest-neighbours.</p>
+      <p class="description">Enter a query sentence for which to find the k-nearest-neighbours:</p>
       <input id="input-query" type="text" name="query">
       <button id="submit-query">Extract</button>
     </div>
 
     <div id="div-result">
       <h2>Result</h2>
-      <p class="description">The k-nearest-neighbours for your query sentence.</p>
+      <p class="description">The k-nearest-neighbours for your query sentence (k = 3):</p>
       <div id="output-result"></div>
     </div>
 
     <div id="div-text">
       <h2>Encode</h2>
-      <p class="description">Enter some text to encode.</p>
+      <p class="description">Enter some text to encode:</p>
       <button id="submit-text">Encode</button>
       <textarea id="input-text"></textarea>
     </div>
 
     <div id="div-reference">
       <h2>Reference</h2>
-      <p class="description">The sentence embedding model used in this application has been created at the <a href="https://www.utoronto.ca/">University of Toronto</a>, and is described in the following paper:</p>
+      <p class="description">The sentence embedding model used in this demo has been created at the <a href="https://www.utoronto.ca/">University of Toronto</a>, and is described in the following paper:</p>
       <ul class="description"><li>R. Kiros, Y. Zhu, R. Salakhutdinov, et al. <a href="http://papers.nips.cc/paper/5950-skip-thought-vectors"><b>Skip-Thought Vectors</b></a>.</li>
       <ul><li>In <i>Advances in Neural Information Processing Systems 28 (NIPS 2015).</i></li></ul>
       </ul>
