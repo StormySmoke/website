@@ -1,7 +1,7 @@
 {
   "name": "sent2vec-client",
   "version": "1.0.0",
-  "description": "",
+  "description": "Error page",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/stormysmoke/sent2vec-client/issues"
   },
-  "homepage": "https://github.com/stormysmoke/sent2vec-client#readme"
+  "homepage": "https://github.com/stormysmoke/sent2vec-client#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
 }
