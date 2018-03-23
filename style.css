@@ -1,14 +1,12 @@
 * {
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif;
-}
+  font-family: 'Source Sans Pro', sans-serif; }
 
 html, body {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
   font-size: 1.2em;
-  background-color: #2667FF;
-}
+  background-color: #2667FF; }
 
 main {
   margin: 6% 10%;
@@ -17,10 +15,10 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-}
+  flex-direction: column; }
 
 #text {
   margin-top: 6%;
-  text-align: center;
-}
+  text-align: center; }
+
+/*# sourceMappingURL=style.css.map */
