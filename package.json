@@ -1,7 +1,7 @@
 {
-  "name": "website",
+  "name": "sent2vec-client",
   "version": "0.0.1",
-  "description": "Web interface for QuantumSense services.",
+  "description": "Sent2Vec client with web interface",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,18 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StormySmoke/website.git"
+    "url": "git+https://github.com/stormysmoke/sent2vec-client.git"
   },
-  "author": "Daniel Weibel",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/StormySmoke/website/issues"
+    "url": "https://github.com/stormysmoke/sent2vec-client/issues"
   },
-  "homepage": "https://github.com/StormySmoke/website#readme",
+  "homepage": "https://github.com/stormysmoke/sent2vec-client#readme",
   "dependencies": {
     "amqplib": "^0.5.2",
     "body-parser": "^1.18.2",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "uuid": "^3.2.1"
   }
 }
