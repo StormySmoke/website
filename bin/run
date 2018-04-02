@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+[[ "$#" < 2 ]] && { echo "Usage: run <tag> <env-file>"; exit 1; }
+
+source "$2"
+
+docker run -d \
+  -e RABBITMQ_URI="$RABBITMQ_URI" \
+  -p 8080:8080 \
+  stormysmoke/sent2vec-client:"$1"
