@@ -26,5 +26,5 @@ bin/run <tag> <env-file>
 Where `<tag>` is the desired version of the image to run, and `<env-file>` is a file containing the following (exported) variable definitions:
 
 ~~~bash
-export export RABBITMQ_URI=<uri>
+export RABBITMQ_URI=<uri>
 ~~~
