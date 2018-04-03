@@ -2,3 +2,5 @@ node_modules/
 .sass-cache
 *.css.map
 .env*
+manifest.yml
+.gitsecret/keys/random_seed
