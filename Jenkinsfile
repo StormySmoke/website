@@ -11,6 +11,8 @@ pipeline {
                 sh 'echo "$HOME"'
                 sh 'cd && pwd'
                 sh 'ls -la /home'
+                sh 'ls -la /root'
+                sh 'cat /root/.docker/config.json'
             }
         }
         stage('Deliver') {
