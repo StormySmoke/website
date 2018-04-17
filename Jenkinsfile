@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh 'echo "$HOME"'
                 sh 'cd && pwd'
-                sh 'ls -l /home'
+                sh 'ls -la /home'
             }
         }
         stage('Deliver') {
