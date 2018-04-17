@@ -8,7 +8,8 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'echo "Testing"'
+                sh 'echo "$HOME"'
+                sh 'cd && pwd'
             }
         }
         stage('Deliver') {
