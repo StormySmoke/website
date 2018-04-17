@@ -13,8 +13,8 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                sh 'pwd'
                 sh 'docker build -t stormysmoke/sent2vec-client:0.0.1-jenkins .'
+                sh 'docker push stormysmoke/sent2vec-client:0.0.1-jenkins'
             }
         }
     }
