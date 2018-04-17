@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker info'
+                sh 'echo "Building"'
             }
         }
         stage('Test') {
@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                sh 'echo "Delivering"'
+                sh 'docker build -t stormysmoke/sent2vec-client:0.0.1-jenkins'
             }
         }
     }
