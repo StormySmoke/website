@@ -38,7 +38,7 @@ pipeline {
                 }
                 sh 'cf push'
                 withCredentials([string(credentialsId: 'rabbitmq-dev', variable: 'RABBITMQ_URI_DEV')]) {
-                    sh 'cf set-env "$APP" RABBITMQ_URI "$RABBITMQ_URI_DEV"
+                    sh 'cf set-env "$APP" RABBITMQ_URI "$RABBITMQ_URI_DEV"'
                 }
                 sh 'cf apps'
                 sh 'cf env "$APP"'
