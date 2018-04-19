@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy to Dev') {
             agent {
                 docker {
-                    image: 'kramos/cloud-foundry-cli:latest'
+                    image 'kramos/cloud-foundry-cli:latest'
                 }
             }
             steps {
