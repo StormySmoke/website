@@ -23,5 +23,12 @@ pipeline {
                 sh 'docker push "$IMAGE"'
             }
         }
+        stage('Deploy to Dev') {
+            steps {
+                withCredentials([string(credentialsId: 'test-credential', variable: 'SECRET')]) {
+                    sh 'echo "$SECRET"'
+                }
+            }
+        }
     }
 }
