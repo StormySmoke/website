@@ -24,9 +24,15 @@ pipeline {
             }
         }
         stage('Deploy to Dev') {
+            agent {
+                docker {
+                    image: 'kramos/cloud-foundry-cli:latest'
+                }
+            }
             steps {
                 withCredentials([string(credentialsId: 'test-credential-2', variable: 'URL')]) {
                     sh 'curl -Lks "$URL"'
+                    sh 'cf -v'
                 }
             }
         }
