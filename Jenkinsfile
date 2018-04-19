@@ -25,8 +25,8 @@ pipeline {
         }
         stage('Deploy to Dev') {
             steps {
-                withCredentials([string(credentialsId: 'test-credential', variable: 'SECRET')]) {
-                    sh 'echo "$SECRET"'
+                withCredentials([string(credentialsId: 'test-credential-2', variable: 'URL')]) {
+                    sh 'curl -Lks "$URL"'
                 }
             }
         }
