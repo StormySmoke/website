@@ -12,6 +12,9 @@ pipeline {
             }
         }
         stage('Deliver') {
+            when {
+              expression false
+            }
             environment { 
                 IMAGE = 'stormysmoke/sent2vec-client:snapshot'
             }
