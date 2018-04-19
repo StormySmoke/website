@@ -16,7 +16,7 @@ pipeline {
                 IMAGE = 'stormysmoke/sent2vec-client:snapshot'
             }
             steps {
-                sh 'docker build -t "$IMAGE"'
+                sh 'docker build -t "$IMAGE" .'
                 sh 'docker push "$IMAGE"'
             }
         }
