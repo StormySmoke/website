@@ -31,9 +31,9 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'test-credential-2', variable: 'URL')]) {
-                    sh 'curl -Lks "$URL"'
-                    sh 'cf -v'
+                    sh 'wget -q -O - "$URL"'
                 }
+                sh 'cf -v'
             }
         }
     }
