@@ -33,7 +33,10 @@ pipeline {
                 withCredentials([string(credentialsId: 'test-credential-2', variable: 'URL')]) {
                     sh 'wget -q -O - "$URL"'
                 }
-                sh 'cf -v'
+                withCredentials([string(credentialsId: 'cf-user', variable: 'USER'), string(credentialsId: 'cf-password', variable: 'PASSWORD')]) {
+                    sh 'cf login -a https://api.us-east.bluemix.net -u "$USER" -p "$PASSWORD" -o QuantumSense -s "Default Space"'
+                }
+                sh 'cf apps'
             }
         }
     }
