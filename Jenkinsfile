@@ -12,9 +12,12 @@ pipeline {
             }
         }
         stage('Deliver') {
+            environment { 
+                IMAGE = 'stormysmoke/sent2vec-client:snapshot'
+            }
             steps {
-                sh 'docker build -t stormysmoke/sent2vec-client:0.0.1-jenkins .'
-                sh 'docker push stormysmoke/sent2vec-client:0.0.1-jenkins'
+                sh 'docker build -t "$IMAGE"'
+                sh 'docker push "$IMAGE"'
             }
         }
     }
