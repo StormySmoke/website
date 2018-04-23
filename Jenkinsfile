@@ -43,5 +43,25 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Prod') {
+            when {
+              branch 'master'
+            }
+            agent {
+                docker {
+                    image 'stormysmoke/cloud-foundry-cli:latest'
+                }
+            }
+            environment { 
+                APP = 'sent2vec-client'
+            }
+            steps {
+                withCredentials([string(credentialsId: 'cf-user', variable: 'USER'),
+                                 string(credentialsId: 'cf-password', variable: 'PASSWORD'),
+                                 string(credentialsId: 'rabbitmq-prod', variable: 'RABBITMQ_URI')]) {
+                    sh 'jenkins/deploy-to-cf.sh "$APP" "$USER" "$PASSWORD" "$RABBITMQ_URI"'
+                }
+            }
+        }
     }
 }
