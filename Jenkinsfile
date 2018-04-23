@@ -39,7 +39,8 @@ pipeline {
                 withCredentials([string(credentialsId: 'cf-user', variable: 'USER'),
                                  string(credentialsId: 'cf-password', variable: 'PASSWORD'),
                                  string(credentialsId: 'rabbitmq-dev', variable: 'RABBITMQ_URI')]) {
-                sh 'jenkins/deploy-to-cf.sh "$APP" "$USER" "$PASSWORD" "$RABBITMQ_URI"'
+                    sh 'jenkins/deploy-to-cf.sh "$APP" "$USER" "$PASSWORD" "$RABBITMQ_URI"'
+                }
             }
         }
     }
